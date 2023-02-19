@@ -20,19 +20,19 @@ pub struct WS {
 impl WS {
     fn get_spaces() -> HResult<Result<[Space; 5], ArrayVec<Space, 5>>> {
         let mut space = ArrayVec::<Space, 5>::new();
-        let ws: Vec<Workspace> = Workspaces::get()?.filter(|item| item.id > 0).collect();
+        let workspaces: Vec<Workspace> = Workspaces::get()?.filter(|item| item.id > 0).collect();
 
         for i in 1..6 {
-            space.push(Space {
-                id: match ws.as_slice().get(i - 1) {
-                    Some(w) => w.id.to_string(),
-                    None => i.to_string(),
-                },
-                windows: match ws.as_slice().get(i - 1) {
-                    Some(w) => w.windows,
-                    None => 0,
-                },
-            })
+            match workspaces.iter().find(|ws| ws.id == i) {
+                Some(w) => space.push(Space {
+                    id: w.id.to_string(),
+                    windows: w.windows,
+                }),
+                None => space.push(Space {
+                    id: i.to_string(),
+                    windows: 0,
+                }),
+            }
         }
 
         Ok(space.into_inner())
