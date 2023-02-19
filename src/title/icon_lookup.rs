@@ -3,8 +3,8 @@ use std::fs;
 use std::path::PathBuf;
 
 const ICON_SIZE: u16 = 24;
-const DEFAULT_ICON: &str = "/home/latipun/.config/eww/assets/hyprland.png";
 const ICON_THEME: &str = "Papirus-Dark";
+pub const DEFAULT_ICON: &str = "/home/latipun/.config/eww/assets/hyprland.png";
 
 /// Guess the icon path of the given app class (a.k.a. app_id or window class), or `DEFAULT_ICON`
 /// if no suitable icon is found.

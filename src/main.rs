@@ -15,9 +15,14 @@ fn main() -> HResult<()> {
 
     match cmd {
         Cmd::Title => {
+            let title = Rc::new(RefCell::new(Title::new()?));
+            title.borrow_mut().print_json();
+
             server
                 .listener
-                .add_active_window_change_handler(|data, _| Title.on_active_window_change(data));
+                .add_active_window_change_handler(move |data, _| {
+                    title.borrow_mut().on_active_window_change(data)
+                });
         }
         Cmd::Workspaces => {
             let workspaces = Rc::new(RefCell::new(WS::new()?));
