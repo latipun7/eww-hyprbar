@@ -26,6 +26,7 @@ fn main() -> HResult<()> {
         }
         Cmd::Workspaces => {
             let workspaces = Rc::new(RefCell::new(WS::new()?));
+            workspaces.borrow_mut().print_json();
 
             let watcher1 = workspaces.clone();
             server.listener.add_workspace_change_handler(move |ws, _| {

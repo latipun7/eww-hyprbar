@@ -52,7 +52,7 @@ impl WS {
         })
     }
 
-    fn print_json(&self) {
+    pub fn print_json(&self) {
         let msg = serde_json::to_string(&self).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
 
         println!("{msg}");
