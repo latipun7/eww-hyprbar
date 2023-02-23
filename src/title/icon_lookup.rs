@@ -20,8 +20,6 @@ pub fn guess_icon(app_class: &str) -> PathBuf {
     PathBuf::from(DEFAULT_ICON)
 }
 
-// follows the same strategy as waybar
-// https://github.com/Alexays/Waybar/tree/master/src/modules/wlr/taskbar.cpp
 fn guess_desktop_file(app_class: &str) -> Option<PathBuf> {
     let mut desktop_files = freedesktop_desktop_entry::Iter::new(default_paths());
 
