@@ -1,6 +1,7 @@
 # `eww-hyprbar 🏡`
 
 [![Discord][discord-image]][discord-url]
+[![GitHub Actions][workflow-image]][workflow-url]
 
 > **☕ Powering EWW for Hyprland 🏡**
 >
@@ -14,3 +15,5 @@
 
 [discord-image]: https://img.shields.io/discord/758271814153011201?label=Developers%20Indonesia&logo=discord&style=flat-square
 [discord-url]: https://discord.gg/njSj2Nq "Chat and discuss at Developers Indonesia"
+[workflow-image]: https://img.shields.io/github/actions/workflow/status/latipun7/eww-hyprbar/gh-release.yml?label=Build%20Release&logo=github-actions&style=flat-square
+[workflow-url]: https://github.com/latipun7/eww-hyprbar/actions "GitHub Actions"
