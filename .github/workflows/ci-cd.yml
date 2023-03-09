@@ -1,0 +1,80 @@
+name: ⚙️🚀
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    tags: ["*"]
+
+concurrency:
+  group: ci-cd-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-artifact:
+    name: 🦀 Build Artifact
+    runs-on: ubuntu-latest
+    env:
+      ARTIFACT_NAME: eww-hyprbar-linux-x86_64
+
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3.3.0
+
+      - name: ♻️ Manage Cache
+        uses: actions/cache@v3.2.6
+        with:
+          path: |
+            ~/.cargo/
+            target/
+          key: cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+            cargo-${{ runner.os }}-
+            cargo-
+
+      - name: 🎨 Check Formatting
+        run: cargo fmt --check --all
+
+      - name: 📎 Check Linting
+        run: cargo clippy --locked --all-targets --all-features -- -D warnings
+
+      - name: 🛠️ Build Binary
+        run: cargo build --locked --release
+
+      - name: 🧪 Run Tests
+        run: cargo test --locked --all-targets --all-features
+
+      - name: 📁 Setup Archive + Extension
+        shell: bash
+        run: |
+          mkdir -p staging
+          cp "target/release/eww-hyprbar" staging/
+          cd staging
+          zip ../$ARTIFACT_NAME.zip *
+
+      - name: ⬆️ Upload Binary Artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_NAME }}.zip
+          retention-days: 5
+
+  release:
+    name: 🚀 Create Release
+    if: github.ref_type	== 'tag'
+    needs: [build-artifact]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Download All Binary Artifacts
+        uses: actions/download-artifact@v3.0.2
+
+      - name: 🗃️Create Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          generate_release_notes: true
+          files: eww-hyprbar-*/*.zip
