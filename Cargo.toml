@@ -7,7 +7,7 @@ edition = "2021"
 hyprland = { git = "https://github.com/hyprland-community/hyprland-rs" }
 arrayvec = { version = "0.7.2", features = ["serde"] }
 serde = "1.0.152"
-serde_json = "1.0.93"
+serde_json = "1.0.95"
 freedesktop-icons = "0.2.3"
 freedesktop-desktop-entry = "0.5.0"
 clap = { version = "4.1.12", features = ["derive"] }
