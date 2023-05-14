@@ -1,6 +1,5 @@
 use clap::Parser;
 use eww_hyprbar::{server::HyprManager, title::Title, workspaces::WS};
-use hyprland::shared::HResult;
 use std::{cell::RefCell, rc::Rc};
 
 #[derive(Debug, Parser)]
@@ -9,7 +8,7 @@ enum Cmd {
     Workspaces,
 }
 
-fn main() -> HResult<()> {
+fn main() -> hyprland::Result<()> {
     let cmd = Cmd::parse();
     let mut server = HyprManager::new();
 

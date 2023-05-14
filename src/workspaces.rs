@@ -1,14 +1,14 @@
 use arrayvec::ArrayVec;
 use hyprland::{
     data::{Workspace, Workspaces},
-    shared::{HResult, HyprData, HyprDataActive, WorkspaceType},
+    shared::{HyprData, HyprDataActive, WorkspaceType},
 };
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Space {
     id: String,
-    windows: u8,
+    windows: u16,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -18,7 +18,7 @@ pub struct WS {
 }
 
 impl WS {
-    fn get_spaces() -> HResult<Result<[Space; 5], ArrayVec<Space, 5>>> {
+    fn get_spaces() -> hyprland::Result<Result<[Space; 5], ArrayVec<Space, 5>>> {
         let mut space = ArrayVec::<Space, 5>::new();
         let workspaces: Vec<Workspace> = Workspaces::get()?.filter(|item| item.id > 0).collect();
 
@@ -42,7 +42,7 @@ impl WS {
         self.spaces = WS::get_spaces().unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
     }
 
-    pub fn new() -> HResult<Self> {
+    pub fn new() -> hyprland::Result<Self> {
         Ok(Self {
             current: match Workspace::get_active() {
                 Ok(ws) => ws.id.to_string(),

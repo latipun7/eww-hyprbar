@@ -4,14 +4,13 @@ pub mod workspaces;
 
 pub mod server {
     use hyprland::{
-        data::Monitor,
-        event_listener::EventListenerMutable as EventListener,
-        shared::{HResult, HyprDataActive},
+        data::Monitor, event_listener::EventListenerMutable as EventListener,
+        shared::HyprDataActive,
     };
 
     pub struct HyprManager {
         pub listener: EventListener,
-        pub monitor: HResult<Monitor>,
+        pub monitor: hyprland::Result<Monitor>,
     }
 
     impl HyprManager {
@@ -23,7 +22,7 @@ pub mod server {
             }
         }
 
-        pub fn start_listener_blocking(self) -> HResult<()> {
+        pub fn start_listener_blocking(self) -> hyprland::Result<()> {
             eprintln!("started blocking listener");
             self.listener.start_listener()
         }

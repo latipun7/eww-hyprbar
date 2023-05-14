@@ -1,10 +1,6 @@
 use self::icon_lookup::guess_icon;
 use self::icon_lookup::DEFAULT_ICON;
-use hyprland::{
-    data::Client,
-    event_listener::WindowEventData,
-    shared::{HResult, HyprDataActiveOptional},
-};
+use hyprland::{data::Client, event_listener::WindowEventData, shared::HyprDataActiveOptional};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
@@ -17,7 +13,7 @@ pub struct Title {
 }
 
 impl Title {
-    pub fn new() -> HResult<Self> {
+    pub fn new() -> hyprland::Result<Self> {
         let class: String;
         let title: String;
 
@@ -47,8 +43,8 @@ impl Title {
     pub fn on_active_window_change(&mut self, data: Option<WindowEventData>) {
         match data {
             Some(c) => {
-                self.title = c.1;
-                self.icon_path = guess_icon(&c.0);
+                self.title = c.window_title;
+                self.icon_path = guess_icon(&c.window_class);
             }
             None => {
                 self.title = String::new();
