@@ -13,7 +13,7 @@ opt-level = "s"
 hyprland = { git = "https://github.com/hyprland-community/hyprland-rs" }
 arrayvec = { version = "0.7.4", features = ["serde"] }
 serde = "1.0.188"
-serde_json = "1.0.104"
+serde_json = "1.0.132"
 freedesktop-icons = "0.2.3"
 freedesktop-desktop-entry = "0.5.0"
 clap = { version = "4.4.6", features = ["derive"] }
